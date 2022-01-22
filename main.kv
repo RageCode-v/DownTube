@@ -1,0 +1,13 @@
+<Adm>:
+    Tel1:
+        name: 'first'
+
+<Tel1>:
+    BoxLayout:
+        orientation: 'vertical'
+        TextInput:
+            id: url
+            hint_text: 'Insira a URL'
+        Button:
+            text: 'Download'
+            on_release: root.get_video(root.ids.url.text)
