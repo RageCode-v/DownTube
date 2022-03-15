@@ -1,13 +1,16 @@
 <Adm>:
-    Tel1:
-        name: 'first'
+    First:
+        name: 'one'
 
-<Tel1>:
+<First>:
     BoxLayout:
         orientation: 'vertical'
         TextInput:
-            id: url
-            hint_text: 'Insira a URL'
+            id: text
+            hint_text: 'URL'
         Button:
-            text: 'Download'
-            on_release: root.get_video(url.text)
+            text: 'Testar'
+            on_release: root.test(text.text)
+        Label:
+            id: demo
+            text: 'Nome do vídeo'

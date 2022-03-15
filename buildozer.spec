@@ -1,7 +1,7 @@
 [app]
 
 # (str) Title of your application
-title = Download Youtube
+title = DownTube
 
 # (str) Package name
 package.name = downloadyoutube
@@ -29,7 +29,7 @@ source.include_exts = py,png,jpg,kv,atlas
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.1.7
+version = 0.2
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -37,7 +37,7 @@ version = 0.1.7
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy==2.0.0,youtube_dl
+requirements = python3,kivy==2.1.0,pytube3
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes

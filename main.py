@@ -1,23 +1,37 @@
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
-from kivy.core.window import Window
-from youtube_dl import YoutubeDL
+from pytube import *
+from os.path import join, dirname
 
-Window.softinput_mode = 'below_target'
+
+class Download(object):
+    def __init__(self, link):
+        self.vid = YouTube(link)
+        self.title = self.vid.title
+        self.st = self.vid.streams.first()
+        self.PATH = join(dirname(str(App.user_data_dir)), 'Download')
+
+    def baixar(self):
+        self.st.download(self.PATH, self.title)
 
 
 class Adm(ScreenManager):
     pass
 
 
-class Tel1(Screen):
-    def get_video(self, url):
-        ydl_opts = {'FORMAT': 'MP4',
-                    'outtmpl': '/storage/emulated/0/Ydown/%(title)s.%(ext)s'
-                    }
-        with YoutubeDL(ydl_opts) as ydl:
-            ydl.download([str(url)])
-        self.ids.url.text = ''
+class First(Screen):
+    def test(self, url):
+        self.ids.text.text = ''
+        try:
+            at = Download(str(url))
+        except Exception as ero:
+            self.ids.demo.text = str(ero)
+        else:
+            self.ids.demo.text = at.title
+            try:
+                at.baixar()
+            except Exception as erro:
+                self.ids.demo.text = str(erro)
 
 
 class Main(App):
