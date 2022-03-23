@@ -1,16 +1,49 @@
-<Adm>:
-    First:
+<ADM>:
+    Prince:
         name: 'one'
 
-<First>:
+<Prince>:
     BoxLayout:
         orientation: 'vertical'
-        TextInput:
-            id: text
-            hint_text: 'URL'
+        padding: root.width*0.1, root.height*0.05
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '30dp'
+            TextInput:
+                id: direct
+                hint_text: 'URL'
+            Button:
+                size_hint_x: None
+                width: '30dp'
+                text: 'Get'
+                on_release: root.start(direct.text)
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: '10sp', 0
+            size_hint_y: None
+            height: root.height*0.3
+            Image:
+                source: './data/image.png'
+                allow_stretch: True
+                keep_ratio: False
+                size: 1280, 720
+                id: tumb
+            Latitle:
+                id: vitle
+                font_name: 'TakaoPMincho.ttf'
+                text: 'Video title'
+        TabbedPanel:
+            do_default_tab: False
+            tab_pos: 'top_mid'
+            TabbedPanelItem:
+                text: '.mp4'
+                Label:
+                    text: 'None'
+            TabbedPanelItem:
+                text: '.mp3'
+                Label:
+                    text: 'None'
         Button:
-            text: 'Testar'
-            on_release: root.test(text.text)
-        Label:
-            id: demo
-            text: 'Nome do vídeo'
+            text: 'Baixar'
+            on_release: None
