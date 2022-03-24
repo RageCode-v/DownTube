@@ -11,6 +11,9 @@ from PIL import Image
 import requests
 from io import BytesIO
 
+pamg = './data/image.png'
+tumb = './data/tumb.png'
+
 if platform == 'android':
     path = join(dirname(str(App.user_data_dir)), 'DownTube')
 else:
@@ -22,21 +25,62 @@ class ADM(ScreenManager):
 
 
 class Prince(Screen):
+    obvid = None
+    op = {}
+
+    def reset(self):
+        self.ids.direct.text = ''
+        self.ids.tumb.source = pamg
+        self.ids.vitle.text = 'Video title'
+        self.obvid = None
+        self.op = {}
+
     def start(self, url):
         try:
             vid = YouTube(str(url))
         except RegexMatchError:
             self.ids.direct.text = ''
+            self.ids.tumb.source = pamg
+            self.ids.vitle.text = 'Vídeo não encontrado'
         except Exception as erro:
             self.ids.direct.text = str(erro)
         else:
-            response = requests.get(vid.thumbnail_url)
-            img = Image.open(BytesIO(response.content))
-            img.save('./data/tumb.png')
-            self.ids.tumb.source = './data/tumb.png'
-            self.ids.tumb.reload()
-            remove('./data/tumb.png')
-            self.ids.vitle.text = vid.title
+            try:
+                response = requests.get(vid.thumbnail_url)
+            except Exception as erro:
+                self.ids.direct.text = str(erro)
+            else:
+                try:
+                    img = Image.open(BytesIO(response.content))
+                    img.save(tumb)
+                except Exception as erro:
+                    self.ids.direct.text = str(erro)
+                else:
+                    self.ids.tumb.source = tumb
+                    remove(tumb)
+                self.ids.vitle.text = vid.title
+            finally:
+                self.obvid = vid
+
+    def select(self, opt: dict):
+        self.op = opt
+
+    def down_this(self):
+        if self.op == {}:
+            pass
+        else:
+            try:
+                st = self.obvid.streams.get_by_itag(self.op['itag'])
+            except KeyError:
+                pass
+            except Exception as erro:
+                self.ids.direct.text = str(erro)
+            else:
+                try:
+                    st.download(path, (self.obvid.title+self.op['ext']))
+                    self.reset()
+                except Exception as erro:
+                    self.ids.direct.text = str(erro)
 
 
 class Latitle(Label):

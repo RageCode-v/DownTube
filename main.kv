@@ -34,16 +34,31 @@
                 font_name: 'TakaoPMincho.ttf'
                 text: 'Video title'
         TabbedPanel:
+            id: tab
             do_default_tab: False
             tab_pos: 'top_mid'
             TabbedPanelItem:
-                text: '.mp4'
-                Label:
-                    text: 'None'
+                text: 'Vídeo'
+                ScrollView:
+                    BoxLayout:
+                        orientation: 'vertical'
+                        Button:
+                            text: '720p/30fps'
+                            on_release: root.select({'itag': 22, 'ext': '.mp4'})
+                        Button:
+                            text: '360p/30fps'
+                            on_release: root.select({'itag': 18, 'ext': '.mp4'})
+                        Button:
+                            text: '144p/7fps'
+                            on_release: root.select({'itag': 17, 'ext': '.mp4'})
             TabbedPanelItem:
-                text: '.mp3'
-                Label:
-                    text: 'None'
+                text: 'Audio'
+                ScrollView:
+                    BoxLayout:
+                        orientation: 'vertical'
+                        Button:
+                            text: 'mp3/128kbps'
+                            on_release: root.select({'itag': 140, 'ext': '.mp3'})
         Button:
             text: 'Baixar'
-            on_release: None
+            on_release: root.down_this()
