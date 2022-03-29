@@ -5,17 +5,22 @@ from kivy.utils import platform
 from kivy.metrics import sp
 from pytube import *
 from pytube.exceptions import RegexMatchError
-from os.path import dirname, join
-from os import remove
+from os.path import join
+from os import remove, environ
+from certifi import where
 from PIL import Image
 import requests
 from io import BytesIO
 
+environ['SSL_CERT_FILE'] = where()
 pamg = './data/image.png'
 tumb = './data/tumb.png'
 
 if platform == 'android':
-    path = join(dirname(str(App.user_data_dir)), 'DownTube')
+    from android.permissions import request_permissions, Permission
+    from android.storage import primary_external_storage_path
+    request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
+    path = join(primary_external_storage_path(), 'Download')
 else:
     path = 'E:\\TestsDownTube'
 
