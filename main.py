@@ -62,7 +62,7 @@ class Prince(Screen):
             finally:
                 self.obvid = vid
 
-    def select(self, opt: dict):
+    def select(self, opt):
         self.op = opt
 
     def down_this(self):

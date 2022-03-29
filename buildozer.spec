@@ -10,7 +10,7 @@ package.name = downloadyoutube
 package.domain = org.test
 
 # (str) Source code where the main.py live
-source.dir = .
+source.dir = ./app
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,ttf
@@ -29,7 +29,7 @@ source.include_exts = py,png,jpg,kv,atlas,ttf
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.2.12
+version = 0.2.132
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -37,7 +37,7 @@ version = 0.2.12
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy==2.1.0,pytube==12.0.0,pillow
+requirements = python3,kivy==2.1.0,pytube==12.0.0,pillow==8.4.0,urllib3
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -93,7 +93,7 @@ fullscreen = 0
 #icon.adaptive_background.filename = %(source.dir)s/data/icon_bg.png
 
 # (list) Permissions
-android.permissions = INTERNET,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
+android.permissions = INTERNET,STORAGE
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
@@ -101,8 +101,8 @@ android.permissions = INTERNET,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
 # (int) Target Android API, should be as high as possible.
 android.api = 31
 
-# (int) Minimum API your APK will support.
-#android.minapi = 29
+# (int) Minimum API your APK / AAB will support.
+#android.minapi = 21
 
 # (int) Android SDK version to use
 #android.sdk = 20
@@ -111,10 +111,10 @@ android.api = 31
 #android.ndk = 19b
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-#android.ndk_api = 29
+#android.ndk_api = 21
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
-android.private_storage = True
+#android.private_storage = True
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
 #android.ndk_path =
@@ -260,8 +260,9 @@ android.accept_sdk_license = True
 # (bool) Copy library instead of making a libpymodules.so
 #android.copy_libs = 1
 
-# (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
-android.arch = arm64-v8a
+# (list) The Android archs to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
+# In past, was `android.arch` as we weren't supporting builds for multiple archs at the same time.
+android.archs = arm64-v8a, armeabi-v7a
 
 # (int) overrides automatic versionCode computation (used in build.gradle)
 # this is not the same as app version and should only be edited if you know what you're doing
@@ -281,6 +282,9 @@ android.allow_backup = True
 
 # (bool) disables the compilation of py to pyc/pyo files when packaging
 # android.no-compile-pyo = True
+
+# (str) The format used to package the app for release mode (aab or apk).
+# android.release_artifact = aab
 
 #
 # Python for android (p4a) specific
@@ -381,7 +385,7 @@ warn_on_root = 0
 # (str) Path to build artifact storage, absolute or relative to spec file
 # build_dir = ./.buildozer
 
-# (str) Path to build output (i.e. .apk, .ipa) storage
+# (str) Path to build output (i.e. .apk, .aab, .ipa) storage
 # bin_dir = ./bin
 
 #    -----------------------------------------------------------------------------
