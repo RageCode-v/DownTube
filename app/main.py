@@ -1,5 +1,5 @@
 from kivy.app import App
-from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
 from kivy.utils import platform
 from kivy.metrics import sp
@@ -23,10 +23,6 @@ if platform == 'android':
     path = join(primary_external_storage_path(), 'Download')
 else:
     path = 'E:\\TestsDownTube'
-
-
-class ADM(ScreenManager):
-    pass
 
 
 class Prince(Screen):
@@ -103,7 +99,7 @@ class Latitle(Label):
 
 class Main(App):
     def build(self):
-        return ADM()
+        return Prince()
 
 
 Main().run()
