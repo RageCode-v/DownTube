@@ -82,7 +82,7 @@ class Prince(Screen):
                 self.ids.direct.text = str(erro)
             else:
                 try:
-                    st.download(path, (self.obvid.title+self.op['ext']))
+                    st.download(path, ((self.obvid.title.replace('/', ' ').replace('\\', ' '))+self.op['ext']))
                     self.reset()
                 except Exception as erro:
                     self.ids.direct.text = str(erro)
