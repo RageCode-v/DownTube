@@ -31,6 +31,7 @@ class Prince(Screen):
 
     def reset(self):
         self.ids.direct.text = ''
+        self.ids.direct.reset_undo()
         self.ids.tumb.source = pamg
         self.ids.vitle.text = 'Video title'
         self.obvid = None
