@@ -38,7 +38,7 @@ class Prince(Screen):
 
     def start(self, url):
         try:
-            vid = YouTube(str(url))
+            vid = YouTube(str(url), on_complete_callback=self.reset)
         except RegexMatchError:
             self.ids.direct.text = ''
             self.ids.tumb.source = pamg
@@ -72,6 +72,8 @@ class Prince(Screen):
         else:
             try:
                 st = self.obvid.streams.get_by_itag(self.op['itag'])
+            except AttributeError:
+                pass
             except KeyError:
                 pass
             except Exception as erro:
@@ -79,7 +81,6 @@ class Prince(Screen):
             else:
                 try:
                     st.download(path, ((self.obvid.title.replace('/', ' ').replace('\\', ' '))+self.op['ext']))
-                    self.reset()
                 except Exception as erro:
                     self.ids.direct.text = str(erro)
 
@@ -98,6 +99,36 @@ class Latitle(Label):
 
 
 class Main(App):
+    def on_pause(self):
+        try:
+            with open(tumb, 'r'):
+                pass
+        except FileNotFoundError:
+            pass
+        else:
+            with open('./data/urlsave.txt', 'w') as f:
+                f.write(str(Prince.ids.direct.text))
+        return True
+
+    def on_resume(self):
+        try:
+            with open(tumb, 'r'):
+                pass
+        except FileNotFoundError:
+            Prince().reset()
+        else:
+            try:
+                with open('./data/urlsave.txt', 'r') as f:
+                    vtx = f.read()
+                vt = tumb
+            except FileNotFoundError:
+                remove(tumb)
+                Prince().reset()
+            else:
+                remove('./data/urlsave.txt')
+                Prince.ids.direct.text = vtx
+                Prince.ids.tumb.source = vt
+
     def build(self):
         return Prince()
 
