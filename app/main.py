@@ -3,14 +3,15 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
 from kivy.utils import platform
 from kivy.metrics import sp
+from kivy.network.urlrequest import UrlRequest
+
 from pytube import *
 from pytube.exceptions import RegexMatchError
+
 from os.path import join
 from os import remove, environ
+
 from certifi import where
-from PIL import Image
-import requests
-from io import BytesIO
 
 environ['SSL_CERT_FILE'] = where()
 pamg = './data/image.png'
@@ -39,7 +40,7 @@ class Prince(Screen):
 
     def start(self, url):
         try:
-            vid = YouTube(str(url), on_complete_callback=self.reset)
+            vid = YouTube(str(url))
         except RegexMatchError:
             self.ids.direct.text = ''
             self.ids.tumb.source = pamg
@@ -48,18 +49,12 @@ class Prince(Screen):
             self.ids.direct.text = str(erro)
         else:
             try:
-                response = requests.get(vid.thumbnail_url)
+                UrlRequest(vid.thumbnail_url, file_path=tumb).wait()
             except Exception as erro:
                 self.ids.direct.text = str(erro)
             else:
-                try:
-                    img = Image.open(BytesIO(response.content))
-                    img.save(tumb)
-                except Exception as erro:
-                    self.ids.direct.text = str(erro)
-                else:
-                    self.ids.tumb.source = tumb
-                    remove(tumb)
+                self.ids.tumb.source = tumb
+                remove(tumb)
                 self.ids.vitle.text = vid.title
             finally:
                 self.obvid = vid
