@@ -2,6 +2,7 @@
     BoxLayout:
         orientation: 'vertical'
         padding: root.width*0.1, root.height*0.05
+        spacing: 10
         BoxLayout:
             orientation: 'horizontal'
             size_hint_y: None
@@ -33,28 +34,44 @@
             id: tab
             do_default_tab: False
             tab_pos: 'top_mid'
+            on_touch_down: root.select({})
             TabbedPanelItem:
                 text: 'Vídeo'
                 ScrollView:
                     BoxLayout:
                         orientation: 'vertical'
-                        Button:
+                        ToggleButton:
+                            size_hint_y: None
+                            height: '40sp'
+                            group: 'downs'
                             text: '720p/30fps'
-                            on_release: root.select({'itag': 22, 'ext': '.mp4'})
-                        Button:
+                            on_press: root.select({'itag': 22, 'ext': '.mp4'})
+                        ToggleButton:
+                            size_hint_y: None
+                            height: '40sp'
+                            group: 'downs'
                             text: '360p/30fps'
-                            on_release: root.select({'itag': 18, 'ext': '.mp4'})
-                        Button:
+                            on_press: root.select({'itag': 18, 'ext': '.mp4'})
+                        ToggleButton:
+                            size_hint_y: None
+                            height: '40sp'
+                            group: 'downs'
                             text: '144p/7fps'
-                            on_release: root.select({'itag': 17, 'ext': '.mp4'})
+                            on_press: root.select({'itag': 17, 'ext': '.mp4'})
             TabbedPanelItem:
                 text: 'Audio'
                 ScrollView:
                     BoxLayout:
                         orientation: 'vertical'
-                        Button:
+                        ToggleButton:
+                            size_hint_y: None
+                            height: '40sp'
+                            group: 'downs'
                             text: 'mp3/128kbps'
-                            on_release: root.select({'itag': 140, 'ext': '.mp3'})
+                            on_press: root.select({'itag': 140, 'ext': '.mp3'})
         Button:
+            pos_hint_x: root.width*0.5
+            size_hint: None, None
+            size: root.width*0.4, '30dp'
             text: 'Baixar'
             on_release: root.down_this()

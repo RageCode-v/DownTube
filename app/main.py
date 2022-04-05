@@ -29,6 +29,7 @@ else:
 class Prince(Screen):
     obvid = None
     op = {}
+    probar = 0
 
     def reset(self):
         self.ids.direct.text = ''
@@ -37,10 +38,11 @@ class Prince(Screen):
         self.ids.vitle.text = 'Video title'
         self.obvid = None
         self.op = {}
+        self.probar = 0
 
     def start(self, url):
         try:
-            vid = YouTube(str(url))
+            self.obvid = YouTube(str(url), on_progress_callback=self.update_p, on_complete_callback=self.end)
         except RegexMatchError:
             self.ids.direct.text = ''
             self.ids.tumb.source = pamg
@@ -49,18 +51,29 @@ class Prince(Screen):
             self.ids.direct.text = str(erro)
         else:
             try:
-                UrlRequest(vid.thumbnail_url, file_path=tumb).wait()
+                UrlRequest(self.obvid.thumbnail_url, file_path=tumb).wait()
             except Exception as erro:
                 self.ids.direct.text = str(erro)
             else:
                 self.ids.tumb.source = tumb
                 remove(tumb)
-                self.ids.vitle.text = vid.title
-            finally:
-                self.obvid = vid
+                self.ids.vitle.text = self.obvid.title
+
+    def end(self, *args):
+        self.reset()
+
+    def update_p(self, stream, chunk, bytes_remaining):
+        def porcent(te, tot):
+            perc = (float(te) / float(tot)) * float(100)
+            return perc
+
+        size = stream.filesize
+        p = porcent(bytes_remaining, size)
+        self.probar = abs(p-100)
 
     def select(self, opt):
         self.op = opt
+        del opt
 
     def down_this(self):
         if self.op == {}:
@@ -116,14 +129,14 @@ class Main(App):
             try:
                 with open('./data/urlsave.txt', 'r') as f:
                     vtx = f.read()
-                vt = tumb
             except FileNotFoundError:
                 remove(tumb)
                 Prince().reset()
             else:
                 remove('./data/urlsave.txt')
                 Prince.ids.direct.text = vtx
-                Prince.ids.tumb.source = vt
+                Prince.ids.tumb.source = tumb
+                del vtx
 
     def build(self):
         return Prince()
