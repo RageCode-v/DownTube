@@ -1,6 +1,8 @@
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
+from kivy.uix.popup import Popup
+from kivy.uix.progressbar import ProgressBar
 from kivy.utils import platform
 from kivy.metrics import sp
 from kivy.network.urlrequest import UrlRequest
@@ -12,6 +14,8 @@ from os.path import join
 from os import remove, environ
 
 from certifi import where
+
+from threading import Thread
 
 environ['SSL_CERT_FILE'] = where()
 pamg = './data/image.png'
@@ -29,7 +33,8 @@ else:
 class Prince(Screen):
     obvid = None
     op = {}
-    probar = 0
+    probar = ProgressBar(max=100)
+    pop = Popup(title='Downloading', content=probar, size_hint=(.5, .3))
 
     def reset(self):
         self.ids.direct.text = ''
@@ -38,11 +43,12 @@ class Prince(Screen):
         self.ids.vitle.text = 'Video title'
         self.obvid = None
         self.op = {}
-        self.probar = 0
+        self.probar.value = 0
+        self.pop.title = 'Downloading'
 
     def start(self, url):
         try:
-            self.obvid = YouTube(str(url), on_progress_callback=self.update_p, on_complete_callback=self.end)
+            self.obvid = YouTube(str(url), on_progress_callback=self.update_p, on_complete_callback=self.status)
         except RegexMatchError:
             self.ids.direct.text = ''
             self.ids.tumb.source = pamg
@@ -59,9 +65,6 @@ class Prince(Screen):
                 remove(tumb)
                 self.ids.vitle.text = self.obvid.title
 
-    def end(self, *args):
-        self.reset()
-
     def update_p(self, stream, chunk, bytes_remaining):
         def porcent(te, tot):
             perc = (float(te) / float(tot)) * float(100)
@@ -69,7 +72,7 @@ class Prince(Screen):
 
         size = stream.filesize
         p = porcent(bytes_remaining, size)
-        self.probar = abs(p-100)
+        self.probar.value = abs(p-100)
 
     def select(self, opt):
         self.op = opt
@@ -89,9 +92,23 @@ class Prince(Screen):
                 self.ids.direct.text = str(erro)
             else:
                 try:
-                    st.download(path, ((self.obvid.title.replace('/', ' ').replace('\\', ' '))+self.op['ext']))
+                    Thread(target=st.download, args=(path, ((self.obvid.title.replace('/', ' ').replace('\\', ' ')) +
+                                                            self.op['ext']), )).start()
                 except Exception as erro:
                     self.ids.direct.text = str(erro)
+                else:
+                    self.status(isopen=True)
+
+    def status(self, *args, **kwargs):
+        try:
+            isopen = kwargs['isopen']
+        except KeyError:
+            isopen = False
+        if isopen:
+            self.pop.open()
+        else:
+            self.pop.title = 'COMPLETO'
+            self.pop.dismiss()
 
 
 class Latitle(Label):

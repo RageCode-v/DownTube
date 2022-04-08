@@ -2,7 +2,7 @@
     BoxLayout:
         orientation: 'vertical'
         padding: root.width*0.1, root.height*0.05
-        spacing: 10
+        spacing: '10sp'
         BoxLayout:
             orientation: 'horizontal'
             size_hint_y: None
@@ -17,14 +17,9 @@
                 on_release: root.start(direct.text)
         BoxLayout:
             orientation: 'horizontal'
-            padding: '10sp', 0
-            size_hint_y: None
-            height: root.height*0.3
             Image:
                 source: './data/image.png'
-                allow_stretch: True
-                keep_ratio: False
-                size: 1280, 720
+                nochace: True
                 id: tumb
             Latitle:
                 id: vitle
@@ -34,27 +29,21 @@
             id: tab
             do_default_tab: False
             tab_pos: 'top_mid'
-            on_touch_down: root.select({})
             TabbedPanelItem:
                 text: 'Vídeo'
                 ScrollView:
                     BoxLayout:
                         orientation: 'vertical'
+                        minimum_height: '40sp'
                         ToggleButton:
-                            size_hint_y: None
-                            height: '40sp'
                             group: 'downs'
                             text: '720p/30fps'
                             on_press: root.select({'itag': 22, 'ext': '.mp4'})
                         ToggleButton:
-                            size_hint_y: None
-                            height: '40sp'
                             group: 'downs'
                             text: '360p/30fps'
                             on_press: root.select({'itag': 18, 'ext': '.mp4'})
                         ToggleButton:
-                            size_hint_y: None
-                            height: '40sp'
                             group: 'downs'
                             text: '144p/7fps'
                             on_press: root.select({'itag': 17, 'ext': '.mp4'})
@@ -63,14 +52,13 @@
                 ScrollView:
                     BoxLayout:
                         orientation: 'vertical'
+                        minimum_height: '40sp'
                         ToggleButton:
-                            size_hint_y: None
-                            height: '40sp'
                             group: 'downs'
                             text: 'mp3/128kbps'
                             on_press: root.select({'itag': 140, 'ext': '.mp3'})
         Button:
-            pos_hint_x: root.width*0.5
+            pos_hint: {'center_x': 0.5}
             size_hint: None, None
             size: root.width*0.4, '30dp'
             text: 'Baixar'
