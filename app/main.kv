@@ -1,65 +1,75 @@
+<TabVid>:
+    ScrollView:
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            Check:
+                group: 'downs'
+                on_press: app.root.select('VHD')
+                text: '720p/30fps'
+            Check:
+                group: 'downs'
+                on_press: app.root.select('VSD')
+                text: '360p/30fps'
+            Check:
+                group: 'downs'
+                on_press: app.root.select('VLS')
+                text: '144p/7fps'
+
+<TabAud>:
+    ScrollView:
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            Check:
+                group: 'downs'
+                on_press: app.root.select('AP')
+                text: 'mp3/128kbps'
+
 <Prince>:
     BoxLayout:
         orientation: 'vertical'
-        padding: root.width*0.1, root.height*0.05
-        spacing: '10sp'
+        padding: root.width*.05, root.height*.1
         BoxLayout:
             orientation: 'horizontal'
             size_hint_y: None
             height: '30dp'
-            TextInput:
+            MDTextField:
                 id: direct
                 hint_text: 'URL'
-            Button:
+            MDIconButton:
                 size_hint_x: None
                 width: '30dp'
-                text: 'Get'
-                on_release: root.start(direct.text)
+                icon: 'card-search'
+                on_release: root.get(direct.text)
         BoxLayout:
             orientation: 'horizontal'
-            Image:
+            spacing: 25
+            AsyncImage:
                 source: './data/image.png'
                 nochace: True
                 id: tumb
-            Latitle:
+            MDLabel:
                 id: vitle
-                font_name: './data/TakaoPMincho.ttf'
+                markup: True
+                font_context: 'system://.'
                 text: 'Video title'
-        TabbedPanel:
-            id: tab
-            do_default_tab: False
-            tab_pos: 'top_mid'
-            TabbedPanelItem:
-                text: 'Vídeo'
-                ScrollView:
-                    BoxLayout:
-                        orientation: 'vertical'
-                        minimum_height: '40sp'
-                        ToggleButton:
-                            group: 'downs'
-                            text: '720p/30fps'
-                            on_press: root.select({'itag': 22, 'ext': '.mp4'})
-                        ToggleButton:
-                            group: 'downs'
-                            text: '360p/30fps'
-                            on_press: root.select({'itag': 18, 'ext': '.mp4'})
-                        ToggleButton:
-                            group: 'downs'
-                            text: '144p/7fps'
-                            on_press: root.select({'itag': 17, 'ext': '.mp4'})
-            TabbedPanelItem:
-                text: 'Audio'
-                ScrollView:
-                    BoxLayout:
-                        orientation: 'vertical'
-                        minimum_height: '40sp'
-                        ToggleButton:
-                            group: 'downs'
-                            text: 'mp3/128kbps'
-                            on_press: root.select({'itag': 140, 'ext': '.mp3'})
-        Button:
-            pos_hint: {'center_x': 0.5}
-            size_hint: None, None
-            size: root.width*0.4, '30dp'
+                on_ref_press: root.new_title()
+
+        MDTabs:
+            pos_hint: {'center_x': .5}
+            tab_hint_x: True
+            allow_stretch: True
+            TabVid:
+                icon: 'file-video'
+                title: 'Vídeo'
+            TabAud:
+                icon: 'file-music'
+                title: 'Áudio'
+        MDRectangleFlatIconButton:
+            icon: 'arrow-collapse-down'
             text: 'Baixar'
+            pos_hint: {'center_x': .5}
             on_release: root.down_this()
