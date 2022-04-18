@@ -1,25 +1,16 @@
 from kivy.utils import platform
 
 if platform == 'android':
-    from jnius import autoclass
-
-    manager = autoclass('android.app.NotificationManager$notify')
-    compat = autoclass('android.app.NotificationCompat')
-    build = autoclass('android.app.Notification.Builder')
-    channelpadrao = autoclass('android.app.NotificationChannel')
-    builder = build(channelpadrao.DEFAULT_CHANNEL_ID)
+    from plyer.facades.notification import Notification
 
 
-    def notbar(name, percent, first):
-        if first:
-            builder.setContentTitle(str(name))
-            builder.setContentText('Download em progresso')
-            builder.setPriority(compat.PRIORITY_DEFAULT)
-            builder.setProgress(100, 0, False)
-            manager(618, builder.build())
+    def notbar(name, percent, nah):
+        if nah:
+            Notification().notify(str(name), 'Download iniciado')
         else:
-            builder.setProgress(100, percent)
-            manager(618, builder.build())
+            Notification().notify(str(name), f'Download em {percent:.0f}', timeout=2, toast=True)
+
+
 else:
     def notbar(name, percent, nah):
         if percent < 100:
