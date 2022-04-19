@@ -1,8 +1,8 @@
 from pytube import YouTube
 from pytube.exceptions import RegexMatchError
 
-from app.logic.notify import notbar
-from app.logic.exceptions import LinkNotFound
+from logic.notify import notbar
+from logic.exceptions import LinkNotFound
 
 
 class Order(object):
