@@ -6,15 +6,15 @@
             height: self.minimum_height
             Check:
                 group: 'downs'
-                on_press: app.root.select('VHD')
+                on_press: app.root.select(0)
                 text: '720p/30fps'
             Check:
                 group: 'downs'
-                on_press: app.root.select('VSD')
+                on_press: app.root.select(1)
                 text: '360p/30fps'
             Check:
                 group: 'downs'
-                on_press: app.root.select('VLS')
+                on_press: app.root.select(2)
                 text: '144p/7fps'
 
 <TabAud>:
@@ -25,7 +25,7 @@
             height: self.minimum_height
             Check:
                 group: 'downs'
-                on_press: app.root.select('AP')
+                on_press: app.root.select(3)
                 text: 'mp3/128kbps'
 
 <Prince>:
@@ -72,4 +72,4 @@
             icon: 'arrow-collapse-down'
             text: 'Baixar'
             pos_hint: {'center_x': .5}
-            on_release: root.down_this()
+            on_release: root.down()

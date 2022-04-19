@@ -9,12 +9,10 @@ class Order(object):
     vid: YouTube
     tumb: str
     title: str
-    opts: dict = {
-        'VHD': (22, '.mp4'),
-        'VSD': (18, '.mp4'),
-        'VLS': (17, '.mp4'),
-        'AP': (140, '.mp3')
-    }
+    opts: list = [
+        [22, '.mp4'], [18, '.mp4'], [17, '.mp4'],
+        [140, '.mp3']
+    ]
     vez = True
 
     def __init__(self, url: str):
@@ -42,7 +40,7 @@ class Order(object):
     def alter_title(self, new_title: str):
         self.title = new_title
 
-    def down_this(self, path: str, op: str):
+    def down_this(self, path: str, op: int):
         name = self.title.replace('/', ' ').replace('\\', ' ').strip()
         st = self.vid.streams.get_by_itag(self.opts[op][0])
         st.download(path, name+self.opts[op][1])

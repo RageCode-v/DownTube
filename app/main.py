@@ -1,5 +1,6 @@
 from kivy.uix.screenmanager import Screen
 from kivy.uix.floatlayout import FloatLayout
+from kivy.utils import platform
 
 from kivymd.app import MDApp
 from kivymd.uix.tab import MDTabsBase
@@ -13,6 +14,9 @@ from certifi import where
 from threading import Thread
 
 from logic import *
+
+if platform == 'android':
+    from logic.notify import channel_creator
 
 environ['SSL_CERT_FILE'] = where()
 pamg = './data/image.png'
@@ -109,7 +113,7 @@ class Check(MDRectangleFlatIconButton, MDToggleButton):
 
 class Prince(Screen):
     obvid: any
-    op: str
+    op: int
 
     def reset(self):
         self.ids.direct.text = ''
@@ -136,10 +140,10 @@ class Prince(Screen):
             else:
                 self.ids.vitle.text = self.obvid.title
 
-    def select(self, opt: str):
+    def select(self, opt: int):
         self.op = opt
 
-    def down_this(self):
+    def down(self):
         try:
             Thread(target=self.obvid.down_this, args=(path, self.op)).start()
         except AttributeError:
@@ -151,6 +155,13 @@ class Prince(Screen):
 
 
 class Main(MDApp):
+    def on_start(self):
+        if platform == 'android':
+            try:
+                channel_creator()
+            except NotificationChannelFailed:
+                pass
+
     def build(self):
         self.theme_cls.colors = colors
         self.theme_cls.primary_palette = 'Amber'
