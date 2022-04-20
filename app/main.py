@@ -92,6 +92,12 @@ class Prince(Screen):
             toast('Download iniciado')
             self.reset()
 
+    def msgerror(self):
+        if self.ids.vitle.text.strip() == '':
+            self.ids.vitle.error = True
+        else:
+            self.ids.vitle.error = False
+
 
 class Main(MDApp):
     def on_start(self):

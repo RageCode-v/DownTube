@@ -51,12 +51,20 @@
                 source: './data/image.png'
                 nochace: True
                 id: tumb
-            MDLabel:
+                pos_hint: {'top': 1.05}
+            MDTextField:
                 id: vitle
-                markup: True
-                font_context: 'system://.'
+                hint_text: 'Nome para o arquivo a ser baixado'
+                helper_text: 'Não deixe isso vazio'
+                helper_text_mode: 'on_error'
+                mode: 'rectangle'
+                color_mode: 'accent'
+                required: True
+                max_height: tumb.height
+                pos_hint: {'center_y': 0.5}
+                multiline: True
                 text: 'Video title'
-                on_ref_press: root.new_title()
+                on_text: root.msgerror()
 
         MDTabs:
             pos_hint: {'center_x': .5}
