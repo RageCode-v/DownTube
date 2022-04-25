@@ -2,7 +2,7 @@ from pytube import YouTube
 from pytube.exceptions import RegexMatchError
 
 from logic.notify import notbar
-from logic.exceptions import LinkNotFound
+from logic.exceptions import LinkNotFound, StringEmpty
 
 
 class Order(object):
@@ -37,10 +37,27 @@ class Order(object):
     def firstag(self):
         self.vez = True
 
-    def alter_title(self, new_title: str):
-        self.title = new_title
+    def alter_title(self):
+        try:
+            text = self.text_replace(self.title)
+        except StringEmpty:
+            text = str(self.vid.title)
+        self.title = text
 
     def down_this(self, path: str, op: int):
-        name = self.title.replace('/', ' ').replace('\\', ' ').strip()
+        self.alter_title()
+        name = self.title
         st = self.vid.streams.get_by_itag(self.opts[op][0])
         st.download(path, name+self.opts[op][1])
+
+    @staticmethod
+    def text_replace(text: str):
+        par = '/\\:*?\"<>|'
+        for c in par:
+            while c in text:
+                text = text.replace(c, ' ')
+        res = text.strip()
+        if res == '':
+            raise StringEmpty
+        else:
+            return res

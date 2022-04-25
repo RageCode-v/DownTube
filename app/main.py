@@ -83,20 +83,27 @@ class Prince(Screen):
 
     def down(self):
         try:
+            if self.obvid.title == '':
+                toast('Nome vazio, usando título original')
+            else:
+                toast('Download iniciado')
             Thread(target=self.obvid.down_this, args=(path, self.op)).start()
         except AttributeError:
             pass
         except Exception as erro:
             print(erro)
         else:
-            toast('Download iniciado')
             self.reset()
 
-    def msgerror(self):
+    def msgver(self):
         if self.ids.vitle.text.strip() == '':
             self.ids.vitle.error = True
         else:
             self.ids.vitle.error = False
+        try:
+            self.obvid.title = self.ids.vitle.text.strip()
+        except AttributeError:
+            pass
 
 
 class Main(MDApp):
