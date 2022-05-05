@@ -4,10 +4,10 @@
 title = DownTube
 
 # (str) Package name
-package.name = downtuberagecodev
+package.name = downtube
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.test
+package.domain = com.ragecodev
 
 # (str) Source code where the main.py live
 source.dir = ./app
@@ -29,7 +29,7 @@ source.include_exts = py,png,jpg,kv,atlas
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.3.58
+version = 0.4.0
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -175,7 +175,7 @@ android.accept_sdk_license = True
 
 # (list) List of Java files to add to the android project (can be java or a
 # directory containing the files)
-#android.add_src =
+android.add_src = JavaFile
 
 # (list) Android AAR archives to add
 #android.add_aars =
@@ -297,7 +297,7 @@ android.allow_backup = True
 #p4a.fork = kivy
 
 # (str) python-for-android branch to use, defaults to master
-p4a.branch = develop
+#p4a.branch = master
 
 # (str) python-for-android specific commit to use, defaults to HEAD, must be within p4a.branch
 #p4a.commit = HEAD
