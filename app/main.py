@@ -1,6 +1,5 @@
 from kivy.uix.screenmanager import Screen
 from kivy.uix.floatlayout import FloatLayout
-from kivy.utils import platform
 
 from kivymd.app import MDApp
 from kivymd.uix.tab import MDTabsBase
@@ -13,9 +12,6 @@ from certifi import where
 from threading import Thread
 
 from logic import *
-
-if platform == 'android':
-    from logic.notify import channel_creator
 
 environ['SSL_CERT_FILE'] = where()
 pamg = './data/image.png'
@@ -51,7 +47,6 @@ class Check(MDRectangleFlatIconButton, MDToggleButton):
 
 class Prince(Screen):
     obvid: any
-    op: int
 
     def reset(self):
         self.ids.direct.text = ''
@@ -59,7 +54,11 @@ class Prince(Screen):
         self.ids.tumb.source = pamg
         self.ids.vitle.text = 'Video title'
         del self.obvid
-        del self.op
+        checks = MDToggleButton.get_widgets('downs')
+        for w in checks:
+            if w.state == 'down':
+                w.state = 'normal'
+        del checks
 
     def get(self, url):
         try:
@@ -78,22 +77,31 @@ class Prince(Screen):
             else:
                 self.ids.vitle.text = self.obvid.title
 
-    def select(self, opt: int):
-        self.op = opt
-
     def down(self):
-        try:
-            if self.obvid.title == '':
-                toast('Nome vazio, usando título original')
+        op = None
+        checking = MDToggleButton.get_widgets('downs')
+        for w in checking:
+            if w.state == 'down':
+                op = w.text
+                break
             else:
-                toast('Download iniciado')
-            Thread(target=self.obvid.down_this, args=(path, self.op)).start()
-        except AttributeError:
-            pass
-        except Exception as erro:
-            print(erro)
+                op = None
+        del checking
+        if op is not None:
+            try:
+                if self.obvid.title == '':
+                    toast('Nome vazio, usando título original')
+                else:
+                    toast('Download iniciado')
+                Thread(target=self.obvid.down_this, args=(path, op)).start()
+            except AttributeError:
+                pass
+            except Exception as erro:
+                print(erro)
+            else:
+                self.reset()
         else:
-            self.reset()
+            toast('Selecione uma opção acima!')
 
     def msgver(self):
         if self.ids.vitle.text.strip() == '':
@@ -107,13 +115,6 @@ class Prince(Screen):
 
 
 class Main(MDApp):
-    def on_start(self):
-        if platform == 'android':
-            try:
-                channel_creator()
-            except NotificationChannelFailed:
-                pass
-
     def build(self):
         self.theme_cls.colors = colors
         self.theme_cls.primary_palette = 'Amber'

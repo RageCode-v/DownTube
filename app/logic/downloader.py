@@ -9,15 +9,16 @@ class Order(object):
     vid: YouTube
     tumb: str
     title: str
-    opts: list = [
-        [22, '.mp4'], [18, '.mp4'], [17, '.mp4'],
-        [140, '.mp3']
-    ]
-    vez = True
+    opts = {
+        '720p/30fps': (22, '.mp4'),
+        '360p/30fps': (18, '.mp4'),
+        '144p/7fps': (17, '.mp4'),
+        'mp3/128kbps': (140, '.mp4')
+    }
 
     def __init__(self, url: str):
         try:
-            self.vid = YouTube(str(url), on_progress_callback=self.verify, on_complete_callback=self.firstag)
+            self.vid = YouTube(str(url), on_progress_callback=self.verify)
         except RegexMatchError:
             raise LinkNotFound
         else:
@@ -31,11 +32,7 @@ class Order(object):
 
         size = stream.filesize
         p = porcent(bytes_remaining, size)
-        notbar(str(self.title), abs(p - 100), self.vez)
-        self.vez = False
-
-    def firstag(self):
-        self.vez = True
+        notbar(str(self.title), abs(p - 100))
 
     def alter_title(self):
         try:
@@ -44,7 +41,7 @@ class Order(object):
             text = str(self.vid.title)
         self.title = text
 
-    def down_this(self, path: str, op: int):
+    def down_this(self, path: str, op: str):
         self.alter_title()
         name = self.title
         st = self.vid.streams.get_by_itag(self.opts[op][0])
