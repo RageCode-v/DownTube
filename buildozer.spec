@@ -37,7 +37,7 @@ version = 0.4.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy==2.1.0,kivymd==0.104.2,pytube==12.0.0,urllib3,charset-normalizer,idna,certifi
+requirements = python3,kivy==2.1.0,kivymd==0.104.2,git+https://github.com/kinshuk-h/pytube,urllib3,charset-normalizer,idna,certifi
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
