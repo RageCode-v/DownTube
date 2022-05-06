@@ -7,6 +7,6 @@ from logic.exceptions import *
 def load_colors():
     from json import loads
 
-    with open('data/colors.json', 'r') as f:
+    with open('./data/colors.json', 'r') as f:
         res = loads(f.read())
     return res
