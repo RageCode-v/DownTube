@@ -93,6 +93,7 @@ class Prince(Screen):
                     toast('Nome vazio, usando título original')
                 else:
                     toast('Download iniciado')
+                self.obvid.title = self.ids.vitle.text
                 Thread(target=self.obvid.down_this, args=(path, op)).start()
             except AttributeError:
                 pass
@@ -108,10 +109,6 @@ class Prince(Screen):
             self.ids.vitle.error = True
         else:
             self.ids.vitle.error = False
-        try:
-            self.obvid.title = self.ids.vitle.text.strip()
-        except AttributeError:
-            pass
 
 
 class Main(MDApp):
