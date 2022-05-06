@@ -13,7 +13,7 @@ class Order(object):
         '720p/30fps': (22, '.mp4'),
         '360p/30fps': (18, '.mp4'),
         '144p/7fps': (17, '.mp4'),
-        'mp3/128kbps': (140, '.mp4')
+        'mp3/128kbps': (140, '.mp3')
     }
 
     def __init__(self, url: str):
