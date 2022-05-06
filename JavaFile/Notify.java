@@ -6,8 +6,8 @@ import android.app.NotificationManager;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import android.app.Notification;
-import android.os.Build;
 import com.ragecodev.downtube.R;
+import android.os.Build;
 import java.lang.Math;
 
 public class Notify{
@@ -42,12 +42,12 @@ public class Notify{
     }
 
     private void sendNotification(Context context, CharSequence name, int percent) {
-        String notification_id = name.toString().substring(0, 3);
+        int notification_id = 618;
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "DownActives");
         builder.setContentTitle(name)
                 .setContentText(percent + "%")
-                .setSmallIcon(R.drawable.download)
+                .setSmallIcon(R.drawable.ic_launcher)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -69,7 +69,7 @@ public class Notify{
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "CompleteDowns");
         builder.setContentTitle(name)
                 .setContentText("Download concluído")
-                .setSmallIcon(R.drawable.check-outline)
+                .setSmallIcon(R.drawable.ic_launcher)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
