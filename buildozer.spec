@@ -13,7 +13,7 @@ package.domain = com.ragecodev
 source.dir = ./app
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas
+source.include_exts = py,png,jpg,kv,atlas,json
 
 # (list) List of inclusions using pattern matching
 #source.include_patterns = assets/*,images/*.png
@@ -29,7 +29,7 @@ source.include_exts = py,png,jpg,kv,atlas
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.4.0
+version = 0.4.6
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -37,7 +37,7 @@ version = 0.4.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy==2.1.0,kivymd==0.104.2,git+https://github.com/kinshuk-h/pytube,urllib3,charset-normalizer,idna,certifi
+requirements = python3,kivy==2.1.0,kivymd==0.104.2,git+https://github.com/kinshuk-h/pytube,urllib3,charset-normalizer,idna,certifi,pillow
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
