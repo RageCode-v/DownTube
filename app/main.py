@@ -89,11 +89,11 @@ class Prince(Screen):
         del checking
         if op is not None:
             try:
+                self.obvid.title = self.ids.vitle.text
                 if self.obvid.title == '':
                     toast('Nome vazio, usando título original')
                 else:
                     toast('Download iniciado')
-                self.obvid.title = self.ids.vitle.text
                 Thread(target=self.obvid.down_this, args=(path, op)).start()
             except AttributeError:
                 pass
