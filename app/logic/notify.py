@@ -9,6 +9,8 @@ if platform == 'android':
     javacl = autoclass('com.ragecodev.downtube.Notify')
     notifyJ = javacl()
 
+    notifyJ.createChannel(context)
+
 
     def notbar(name, percent):
         percent = int(percent)
