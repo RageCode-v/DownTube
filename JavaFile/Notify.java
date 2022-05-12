@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import android.app.Notification;
@@ -33,13 +34,13 @@ public class Notify{
         }
     }
 
-    private void sendNotification(Context context, Intent intent, CharSequence name, int percent) {
+    private void sendNotification(Context context, CharSequence name, int percent) {
         int notification_id = 618;
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "DownActives");
         builder.setContentTitle(name)
                 .setContentText(percent + "%")
-                .setSmallIcon(R.drawable.download)
+                .setSmallIcon(R.drawable.ic_download)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -53,11 +54,12 @@ public class Notify{
             Uri uri = Uri.parse(path);
             Intent file = new Intent(Intent.ACTION_PICK);
             file.setDataAndType(uri, "*/*");
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, file, 0);
 
             builder.setProgress(0, 0, false);
-            builder.setSmallIcon(R.drawable.check);
-            builder.setLargeIcon(R.drawable.check);
-            builder.setContentIntent(file);
+            builder.setSmallIcon(R.drawable.ic_check);
+            builder.setLargeIcon(R.drawable.ic_check);
+            builder.setContentIntent(pendingIntent);
         }
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(notification_id, builder.build());
