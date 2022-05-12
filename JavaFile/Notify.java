@@ -52,8 +52,9 @@ public class Notify{
         else {
             String path = Environment.getExternalStorageDirectory() + "/" + "Download" + "/" + name.toString();
             Uri uri = Uri.parse(path);
-            Intent file = new Intent(Intent.ACTION_PICK);
-            file.setDataAndType(uri, "*/*");
+            Intent file = new Intent(Intent.ACTION_VIEW);
+            file.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .setDataAndType(uri, "*/*");
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, file, 0);
 
             builder.setProgress(0, 0, false);

@@ -43,9 +43,10 @@ class Order(object):
 
     def down_this(self, path: str, op: str):
         self.alter_title()
+        self.title = self.title + self.opts[op][1]
         name = self.title
         st = self.vid.streams.get_by_itag(self.opts[op][0])
-        st.download(path, name+self.opts[op][1])
+        st.download(path, name)
 
     @staticmethod
     def text_replace(text: str):
