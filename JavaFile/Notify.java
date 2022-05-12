@@ -40,7 +40,7 @@ public class Notify{
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "DownActives");
         builder.setContentTitle(name)
                 .setContentText(percent + "%")
-                .setSmallIcon(R.drawable.ic_download)
+                .setSmallIcon(R.drawable.download)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -57,8 +57,7 @@ public class Notify{
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, file, 0);
 
             builder.setProgress(0, 0, false);
-            builder.setSmallIcon(R.drawable.ic_check);
-            builder.setLargeIcon(R.drawable.ic_check);
+            builder.setSmallIcon(R.drawable.check);
             builder.setContentIntent(pendingIntent);
         }
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
