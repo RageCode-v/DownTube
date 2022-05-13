@@ -29,7 +29,7 @@ source.include_exts = py,png,jpg,kv,atlas,json
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.4.14
+version = 0.4.15
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -44,10 +44,10 @@ requirements = python3,kivy==2.1.0,kivymd==0.104.2,pytube==12.1.0,urllib3,charse
 # requirements.source.kivy = ../../kivy
 
 # (str) Presplash of the application
-#presplash.filename = %(source.dir)s/data/presplash.png
+presplash.filename = icon/title_presplash.png
 
 # (str) Icon of the application
-#icon.filename = %(source.dir)s/data/icon.png
+icon.filename = icon/icon.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait
@@ -86,7 +86,7 @@ android.presplash_color = #ff751a
 # see https://lottiefiles.com/ for examples and https://airbnb.design/lottie/
 # for general documentation.
 # Lottie files can be created using various tools, like Adobe After Effect or Synfig.
-#android.presplash_lottie = "path/to/lottie/file.json"
+android.presplash_lottie = "icon/fire_explode.json"
 
 # (str) Adaptive icon of the application (used if Android API level is 26+ at runtime)
 #icon.adaptive_foreground.filename = %(source.dir)s/data/icon_fg.png
