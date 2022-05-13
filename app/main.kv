@@ -50,7 +50,7 @@
                 pos_hint: {'top': 1.05}
             MDTextField:
                 id: vitle
-                hint_text: 'Nome para o arquivo a ser baixado'
+                hint_text: 'Nome para o arquivo'
                 helper_text: 'Não deixe isso vazio'
                 helper_text_mode: 'on_error'
                 mode: 'rectangle'
@@ -59,7 +59,7 @@
                 max_height: tumb.height
                 pos_hint: {'center_y': 0.5}
                 multiline: True
-                text: 'Video title'
+                text: 'Título do vídeo'
                 on_text: root.msgver()
 
         MDTabs:

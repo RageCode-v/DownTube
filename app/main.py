@@ -7,6 +7,8 @@ from kivymd.uix.button import MDRectangleFlatIconButton
 from kivymd.uix.behaviors.toggle_behavior import MDToggleButton
 from kivymd.toast import toast
 
+from pytube.exceptions import VideoUnavailable
+
 from os import environ
 from certifi import where
 from threading import Thread
@@ -63,17 +65,26 @@ class Prince(Screen):
     def get(self, url):
         try:
             self.obvid = Order(url)
+
         except LinkNotFound:
             self.ids.direct.text = ''
             self.ids.tumb.source = pamg
             self.ids.vitle.text = 'Vídeo não encontrado'
+
+        except VideoUnavailable as erro:
+            toast(str(erro))
+
         except Exception as erro:
             print(erro)
+            print(erro.__class__)
+
         else:
             try:
                 self.ids.tumb.source = str(self.obvid.tumb)
+
             except Exception as erro:
                 print(erro)
+
             else:
                 self.ids.vitle.text = self.obvid.title
 
@@ -92,17 +103,26 @@ class Prince(Screen):
                 self.obvid.title = self.ids.vitle.text
                 if self.obvid.title == '':
                     toast('Nome vazio, usando título original')
+
                 else:
                     toast('Download iniciado')
+
                 Thread(target=self.obvid.down_this, args=(path, op)).start()
+
             except AttributeError:
                 pass
+
             except Exception as erro:
                 print(erro)
+
             else:
                 self.reset()
+
         else:
-            toast('Selecione uma opção acima!')
+            if self.ids.direct.text == '':
+                toast('Insira uma URL válida')
+            else:
+                toast('Selecione uma opção acima!')
 
     def msgver(self):
         if self.ids.vitle.text.strip() == '':
